@@ -62,11 +62,24 @@ def eliminar_habitacion(request, id):
     habitacion = get_object_or_404(Habitacion, id=id)
 
     if request.method == 'POST':
+
+        # Impedir eliminar habitaciones con reservaciones activas
+        if habitacion.reservaciones.filter(estado='Activa').exists():
+            return render(request, 'habitaciones/eliminar.html', {
+                'habitacion': habitacion,
+                'error': 'No se puede eliminar esta habitación porque tiene reservaciones activas.'
+            })
+
+        # Conservar el historial de reservaciones canceladas o finalizadas
+        if habitacion.reservaciones.exists():
+            return render(request, 'habitaciones/eliminar.html', {
+                'habitacion': habitacion,
+                'error': 'No se puede eliminar esta habitación porque tiene un historial de reservaciones.'
+            })
+
         habitacion.delete()
         return redirect('lista_habitaciones')
 
-    return render(
-        request,
-        'habitaciones/eliminar.html',
-        {'habitacion': habitacion}
-    )
+    return render(request, 'habitaciones/eliminar.html', {
+        'habitacion': habitacion
+    })

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancelar reservación - Hotel Paradise</title>
+</head>
+<body>
+    <h1>Cancelar reservación</h1>
+
+    <p>¿Estás seguro de que deseas cancelar esta reservación?</p>
+
+    <p>
+        <strong>Cliente:</strong> {{ reservacion.cliente }}
+    </p>
+
+    <p>
+        <strong>Habitación:</strong>
+        {{ reservacion.habitacion.numero }}
+    </p>
+
+    <p>
+        <strong>Fecha de entrada:</strong>
+        {{ reservacion.fecha_entrada|date:"d/m/Y" }}
+    </p>
+
+    <p>
+        <strong>Fecha de salida:</strong>
+        {{ reservacion.fecha_salida|date:"d/m/Y" }}
+    </p>
+
+    <p>
+        <strong>Total:</strong> ${{ reservacion.total }}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sí, cancelar reservación</button>
+    </form>
+
+    <p>
+        <a href="{% url 'lista_reservaciones' %}">
+            No, volver a la lista
+        </a>
+    </p>
+</body>
+</html>

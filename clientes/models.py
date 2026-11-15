@@ -11,5 +11,5 @@ class Cliente(models.Model):
         verbose_name = "Cliente"
         verbose_name_plural = "Clientes"
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.nombre} {self.apellidos}"
