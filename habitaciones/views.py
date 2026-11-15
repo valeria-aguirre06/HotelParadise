@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Habitacion
 from .forms import HabitacionForm
-
+from django.contrib.auth.decorators import login_required
 
 # Consultar habitaciones
+@login_required(login_url='login')
 def lista_habitaciones(request):
     habitaciones = Habitacion.objects.all().order_by('numero')
 
@@ -15,6 +16,7 @@ def lista_habitaciones(request):
 
 
 # Registrar habitación
+@login_required(login_url='login')
 def crear_habitacion(request):
     form = HabitacionForm(
         request.POST or None,
@@ -33,6 +35,7 @@ def crear_habitacion(request):
 
 
 # Modificar habitación
+@login_required(login_url='login')
 def editar_habitacion(request, id):
     habitacion = get_object_or_404(Habitacion, id=id)
 
@@ -54,6 +57,7 @@ def editar_habitacion(request, id):
 
 
 # Eliminar habitación
+@login_required(login_url='login')
 def eliminar_habitacion(request, id):
     habitacion = get_object_or_404(Habitacion, id=id)
 
