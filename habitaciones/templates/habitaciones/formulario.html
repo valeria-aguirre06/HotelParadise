@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario - Hotel Paradise</title>
+</head>
+<body>
+
+    <h1>Registro de Habitaciones</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Guardar</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'lista_habitaciones' %}">
+        Volver a habitaciones
+    </a>
+
+</body>
+</html>

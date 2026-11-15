@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Habitaciones - Hotel Paradise</title>
+</head>
+<body>
+
+    <h1>Habitaciones de Hotel Paradise</h1>
+
+    <a href="{% url 'crear_habitacion' %}">
+        Agregar habitación
+    </a>
+
+    <hr>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Tipo</th>
+                <th>Precio por noche</th>
+                <th>Capacidad</th>
+                <th>Disponible</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for habitacion in habitaciones %}
+            <tr>
+                <td>{{ habitacion.numero }}</td>
+                <td>{{ habitacion.tipo }}</td>
+                <td>${{ habitacion.precio_noche }}</td>
+                <td>{{ habitacion.capacidad }}</td>
+                <td>
+                    {% if habitacion.disponible %}
+                        Sí
+                    {% else %}
+                        No
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if habitacion.imagen %}
+                        <img src="{{ habitacion.imagen.url }}"
+                            alt="Habitación {{ habitacion.numero }}"
+                            width="120">
+                    {% else %}
+                        Sin imagen
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'editar_habitacion' habitacion.id %}">
+                        Editar
+                    </a>
+
+                    <a href="{% url 'eliminar_habitacion' habitacion.id %}">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">
+                    No hay habitaciones registradas.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
