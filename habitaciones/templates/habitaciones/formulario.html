@@ -1,26 +1,78 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Formulario - Hotel Paradise</title>
-</head>
-<body>
 
-    <h1>Registro de Habitaciones</h1>
+{% extends 'core/base.html' %}
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+{% block title %}Formulario de habitación - Hotel Paradise{% endblock %}
 
-        {{ form.as_p }}
+{% block content %}
 
-        <button type="submit">Guardar</button>
-    </form>
+<h1 class="titulo fw-bold">
+    {% if form.instance.pk %}
+        Editar habitación
+    {% else %}
+        Registrar habitación
+    {% endif %}
+</h1>
 
-    <br>
+<p class="text-muted">
+    Completa los datos de la habitación.
+</p>
 
-    <a href="{% url 'lista_habitaciones' %}">
-        Volver a habitaciones
-    </a>
+<div class="card tarjeta mt-4">
+    <div class="card-body p-4">
 
-</body>
-</html>
+        <form method="post" enctype="multipart/form-data"
+              class="formulario-habitacion">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-primary">
+                    Guardar habitación
+                </button>
+
+                <a href="{% url 'lista_habitaciones' %}"
+                   class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<style>
+    .formulario-habitacion p {
+        margin-bottom: 20px;
+    }
+
+    .formulario-habitacion label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .formulario-habitacion input:not([type="checkbox"]),
+    .formulario-habitacion select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        background-color: white;
+    }
+
+    .formulario-habitacion input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+
+    .formulario-habitacion .errorlist {
+        color: #dc3545;
+        margin-top: 5px;
+    }
+</style>
+
+{% endblock %}

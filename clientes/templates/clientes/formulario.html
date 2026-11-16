@@ -1,23 +1,81 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ titulo }} - Hotel Paradise</title>
-</head>
-<body>
-    <h1>{{ titulo }}</h1>
 
-    <form method="post">
-        {% csrf_token %}
+{% extends 'core/base.html' %}
 
-        {{ form.as_p }}
+{% block title %}Formulario de cliente - Hotel Paradise{% endblock %}
 
-        <button type="submit">Guardar cliente</button>
-    </form>
+{% block content %}
 
-    <p>
-        <a href="{% url 'lista_clientes' %}">Volver a la lista</a>
-    </p>
-</body>
-</html>
+<h1 class="titulo fw-bold">
+    {% if form.instance.pk %}
+        Editar cliente
+    {% else %}
+        Registrar cliente
+    {% endif %}
+</h1>
+
+<p class="text-muted">
+    Completa los datos del cliente.
+</p>
+
+<div class="card tarjeta mt-4">
+    <div class="card-body p-4">
+
+        <form method="post" class="formulario-cliente">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+
+                <button type="submit" class="btn btn-primary">
+                    Guardar cliente
+                </button>
+
+                <a href="{% url 'lista_clientes' %}"
+                   class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<style>
+    .formulario-cliente p {
+        margin-bottom: 20px;
+    }
+
+    .formulario-cliente label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .formulario-cliente input,
+    .formulario-cliente select,
+    .formulario-cliente textarea {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        background-color: white;
+    }
+
+    .formulario-cliente .errorlist {
+        color: #dc3545;
+        margin-top: 5px;
+    }
+
+    .formulario-cliente input:focus {
+        border-color: #183153;
+        outline: none;
+        box-shadow: 0 0 4px rgba(24, 49, 83, 0.2);
+    }
+</style>
+
+{% endblock %}
